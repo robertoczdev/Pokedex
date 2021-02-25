@@ -12,12 +12,18 @@ class PokemonViewController: UIViewController {
     
     //MARK: Variables
     var data:Displayable?
+    var mainColor:UIColor = UIColor.rgb(red: 101, green: 175, blue: 229)
     
     
     
         
     
     //MARK: Outlets
+    
+    
+    
+    @IBOutlet var mainView: UIView!
+
     
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
@@ -34,6 +40,14 @@ class PokemonViewController: UIViewController {
     @IBOutlet weak var sdefValueLbl: UILabel!
     @IBOutlet weak var spdValueLbl: UILabel!
     
+    
+    @IBOutlet weak var hpLbl: UILabel!
+    @IBOutlet weak var atkLbl: UILabel!
+    @IBOutlet weak var defLbl: UILabel!
+    @IBOutlet weak var satkLbl: UILabel!
+    @IBOutlet weak var sdefLbl: UILabel!
+    @IBOutlet weak var spdLbl: UILabel!
+    
     @IBOutlet weak var hpPogress: UIProgressView!
     @IBOutlet weak var atkProgress: UIProgressView!
     @IBOutlet weak var defPogress: UIProgressView!
@@ -49,15 +63,17 @@ class PokemonViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        setUpViewController()
+        
         
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setUpData()
+        
+        setUpUIControls()
         setUpDataPokemon()
+        
         
     }
     
@@ -69,32 +85,20 @@ class PokemonViewController: UIViewController {
 
 extension PokemonViewController{
     
-    func setUpViewController(){
+    func setUpUIControls(){
         containerView.layer.cornerRadius = 45
         containerView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
-        
-        
+
         typeLabel.layer.cornerRadius = 10
         typeLabel.layer.masksToBounds = true
-        
+       
+   
         statsBtn.layer.cornerRadius = 20
-        statsBtn.backgroundColor = UIColor.rgb(red: 101, green: 175, blue: 229)
-        
-        evolutionsBtn.backgroundColor = .white
-        evolutionsBtn.setTitleColor(UIColor.rgb(red: 101, green: 175, blue: 229), for: .normal)
+
         evolutionsBtn.layer.cornerRadius = 20
-        
-        movesBtn.backgroundColor = .white
-        movesBtn.setTitleColor(UIColor.rgb(red: 101, green: 175, blue: 229), for: .normal)
+  
         movesBtn.layer.cornerRadius = 20
         
-        
-    }
-    
-    
-    func setUpData()  {
-        self.pokemonName.text = data?.nameLabelText
-        print(data?.urlPokemon)
     }
     
 }
@@ -104,21 +108,84 @@ extension PokemonViewController{
     
     func setUpDataPokemon(){
         
+        self.pokemonName.text = data?.nameLabelText
         
-        NetworkingProvider.shared.getPokemonTypes(url: self.data!.urlPokemon) { (poke: PokemonBase) in
-            if let types = poke.types{
+        NetworkingProvider.shared.getPokemonData(url: self.data!.urlPokemon) { (pokemonData: PokemonBase) in
+            if let types = pokemonData.types{
                 self.typeLabel.text = types[0].type?.name
-                for type in types{
-                    print(type.type?.name)
+                
+                switch types[0].type?.name {
+                case "water":
+                    self.mainColor = UIColor.water()
+                case "grass":
+                    self.mainColor = UIColor.grass()
+                case "normal":
+                    self.mainColor = UIColor.normal()
+                case "fighting":
+                    self.mainColor = UIColor.fight()
+                case "poison":
+                    self.mainColor = UIColor.poison()
+                case "ground":
+                    self.mainColor = UIColor.ground()
+                case "rock":
+                    self.mainColor = UIColor.rock()
+                case "bug":
+                    self.mainColor = UIColor.bug()
+                case "ghost":
+                    self.mainColor = UIColor.ghost()
+                case "steel":
+                    self.mainColor = UIColor.steel()
+                case "fire":
+                    self.mainColor = UIColor.fire()
+                case "electric":
+                    self.mainColor = UIColor.electric()
+                case "psychic":
+                    self.mainColor = UIColor.psychic()
+                case "ice":
+                    self.mainColor = UIColor.ice()
+                case "dragon":
+                    self.mainColor = UIColor.dragon()
+                case "dark":
+                    self.mainColor = UIColor.dark()
+                case "fairy":
+                    self.mainColor = UIColor.fairy()
+                    
+                default:
+                    self.mainColor = UIColor.normal()
                 }
+                
+                
+                self.movesBtn.backgroundColor = .white
+                self.movesBtn.setTitleColor(self.mainColor, for: .normal)
+                self.statsBtn.backgroundColor = self.mainColor
+                self.statsBtn.setTitleColor(.white, for: .normal)
+                self.typeLabel.backgroundColor = self.mainColor
+                self.evolutionsBtn.backgroundColor = .white
+                self.evolutionsBtn.setTitleColor(self.mainColor, for: .normal)
+                self.view.backgroundColor = self.mainColor
+                
+                
+                self.hpPogress.progressTintColor = self.mainColor
+                self.atkProgress.progressTintColor = self.mainColor
+                self.defPogress.progressTintColor = self.mainColor
+                self.stakProgress.progressTintColor = self.mainColor
+                self.sdefProgress.progressTintColor = self.mainColor
+                self.spdProgress.progressTintColor = self.mainColor
+                
+                self.hpLbl.textColor = self.mainColor
+                self.atkLbl.textColor = self.mainColor
+                self.defLbl.textColor = self.mainColor
+                self.satkLbl.textColor = self.mainColor
+                self.sdefLbl.textColor = self.mainColor
+                self.spdLbl.textColor = self.mainColor
             }
             
-            if let img = poke.sprites?.other?.officialArtwork?.frontDefault{
+            if let img = pokemonData.sprites?.other?.officialArtwork?.frontDefault{
                 self.pokemonImage.kf.setImage(with: URL(string: img))
                 
             }
             
-            if let stats = poke.stats{
+            if let stats = pokemonData.stats{
                 
                 
                 self.hpValueLbl.text = String(format: "%03d", (stats[0].baseStat!))

@@ -222,7 +222,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zra-xo-9hH">
-                                <rect key="frame" x="0.0" y="192" width="414" height="650"/>
+                                <rect key="frame" x="0.0" y="272" width="414" height="570"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokemon007" translatesAutoresizingMaskIntoConstraints="NO" id="ImF-S4-dOc">
                                         <rect key="frame" x="118" y="-150" width="178" height="178"/>
@@ -253,8 +253,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="135" id="eXg-YS-Jai"/>
                                         </constraints>
-                                        <string key="text">Squirtle’s shell is not merely used for protection.
-The shell’s rounded shape and the grooves on its surface help minimize resistance in water, enabling this pokemon to swim at high speed.</string>
+                                        <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</string>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
                                         <color key="textColor" red="0.30980392159999998" green="0.30980392159999998" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -330,7 +329,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wmc-V1-iSk">
-                                        <rect key="frame" x="25" y="377" width="364" height="273"/>
+                                        <rect key="frame" x="25" y="377" width="364" height="193"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LH4-Xu-Ciz">
                                                 <rect key="frame" x="0.0" y="2" width="364" height="24"/>
@@ -347,7 +346,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9W2-RK-teH">
                                                         <rect key="frame" x="43" y="2" width="24" height="20"/>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.89803921568627454" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="EbO-Bz-KLJ">
@@ -384,7 +383,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NcA-Tl-ihX">
                                                         <rect key="frame" x="43" y="2" width="24" height="20"/>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="hFS-Lg-goW">
@@ -421,7 +420,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ZH-6b-hb3">
                                                         <rect key="frame" x="43" y="2" width="24" height="20"/>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="CV9-JZ-N1l">
@@ -458,7 +457,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qni-yK-E71">
                                                         <rect key="frame" x="43" y="2" width="24" height="20"/>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="RCN-6p-bi0">
@@ -492,7 +491,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5b-kr-TFs">
                                                         <rect key="frame" x="43" y="2" width="24" height="20"/>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="Vir-A4-iss">
@@ -529,7 +528,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wE7-98-fY0">
                                                         <rect key="frame" x="43" y="2" width="24" height="20"/>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="DUo-4b-zhV">
@@ -552,7 +551,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="TzX-jo-Brj" secondAttribute="trailing" id="0dD-qp-xXb"/>
                                             <constraint firstAttribute="trailing" secondItem="5yr-Tw-6wQ" secondAttribute="trailing" id="1ZD-Lm-ShE"/>
@@ -578,7 +577,7 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="ImF-S4-dOc" firstAttribute="centerX" secondItem="Zra-xo-9hH" secondAttribute="centerX" id="2Lo-aL-RWy"/>
-                                    <constraint firstAttribute="height" constant="650" id="5hZ-pa-EeW"/>
+                                    <constraint firstAttribute="height" constant="570" id="5hZ-pa-EeW"/>
                                     <constraint firstItem="vPi-II-iGI" firstAttribute="leading" secondItem="Zra-xo-9hH" secondAttribute="leading" constant="15" id="Dea-Wd-xAh"/>
                                     <constraint firstItem="dmk-Jz-XeS" firstAttribute="top" secondItem="8xU-56-Izv" secondAttribute="bottom" constant="20" id="GSe-6I-DKb"/>
                                     <constraint firstAttribute="trailing" secondItem="tCX-wa-Zlf" secondAttribute="trailing" constant="20" id="GVQ-Vc-7z0"/>
@@ -607,20 +606,27 @@ The shell’s rounded shape and the grooves on its surface help minimize resista
                     </view>
                     <navigationItem key="navigationItem" id="XLN-NU-zfx"/>
                     <connections>
+                        <outlet property="atkLbl" destination="X0J-t2-K4g" id="IQl-9M-Diu"/>
                         <outlet property="atkProgress" destination="hFS-Lg-goW" id="pkd-HE-tya"/>
                         <outlet property="atkValueLbl" destination="NcA-Tl-ihX" id="vTl-lr-gAY"/>
                         <outlet property="containerView" destination="Zra-xo-9hH" id="wHF-e5-vVy"/>
+                        <outlet property="defLbl" destination="zdk-K0-6QY" id="eg1-gf-dXL"/>
                         <outlet property="defPogress" destination="CV9-JZ-N1l" id="uVz-kh-fGz"/>
                         <outlet property="defValueLbl" destination="0ZH-6b-hb3" id="dQZ-Lb-R1a"/>
                         <outlet property="evolutionsBtn" destination="W7u-zF-gwF" id="uZk-7f-A4Y"/>
+                        <outlet property="hpLbl" destination="r7D-l0-qyO" id="wEY-B1-ODf"/>
                         <outlet property="hpPogress" destination="EbO-Bz-KLJ" id="JIL-5Q-OyC"/>
                         <outlet property="hpValueLbl" destination="9W2-RK-teH" id="xJf-pZ-QkB"/>
+                        <outlet property="mainView" destination="bVU-cK-VaR" id="jcf-zZ-9mF"/>
                         <outlet property="movesBtn" destination="TNG-aU-aaG" id="ELQ-lq-scQ"/>
                         <outlet property="pokemonImage" destination="ImF-S4-dOc" id="khD-U1-fi0"/>
                         <outlet property="pokemonName" destination="tCX-wa-Zlf" id="Nqz-HL-9TX"/>
+                        <outlet property="satkLbl" destination="gDw-if-hlG" id="CQ8-6T-ggX"/>
                         <outlet property="satkValueLbl" destination="Qni-yK-E71" id="Wxt-qw-VtI"/>
+                        <outlet property="sdefLbl" destination="9in-Jz-clm" id="Rzd-NQ-ApN"/>
                         <outlet property="sdefProgress" destination="Vir-A4-iss" id="ell-dE-v5x"/>
                         <outlet property="sdefValueLbl" destination="X5b-kr-TFs" id="Xz3-Lg-mXW"/>
+                        <outlet property="spdLbl" destination="aOB-e9-DCH" id="VWg-HC-HID"/>
                         <outlet property="spdProgress" destination="DUo-4b-zhV" id="PbF-Uc-iYv"/>
                         <outlet property="spdValueLbl" destination="wE7-98-fY0" id="vV5-Wg-JN7"/>
                         <outlet property="stakProgress" destination="RCN-6p-bi0" id="btx-0d-pLk"/>
