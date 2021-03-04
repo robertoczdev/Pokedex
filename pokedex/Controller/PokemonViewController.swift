@@ -32,6 +32,7 @@ class PokemonViewController: UIViewController {
     @IBOutlet weak var evolutionsBtn: UIButton!
     @IBOutlet weak var statsBtn: UIButton!
     @IBOutlet weak var movesBtn: UIButton!
+    @IBOutlet weak var descriptionLbl: UILabel!
     
     @IBOutlet weak var hpValueLbl: UILabel!
     @IBOutlet weak var atkValueLbl: UILabel!
@@ -39,7 +40,6 @@ class PokemonViewController: UIViewController {
     @IBOutlet weak var satkValueLbl: UILabel!
     @IBOutlet weak var sdefValueLbl: UILabel!
     @IBOutlet weak var spdValueLbl: UILabel!
-    
     
     @IBOutlet weak var hpLbl: UILabel!
     @IBOutlet weak var atkLbl: UILabel!
@@ -56,6 +56,8 @@ class PokemonViewController: UIViewController {
     @IBOutlet weak var spdProgress: UIProgressView!
     
     
+    @IBOutlet weak var itemContainer: UIView!
+    @IBOutlet weak var evolutionsView: UIView!
     
     
     
@@ -69,19 +71,55 @@ class PokemonViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        
         
         setUpUIControls()
         setUpDataPokemon()
+        
+        super.viewWillAppear(animated)
         
         
     }
     
     
-
+    @IBAction func evolutionBtnAction(_ sender: Any) {
+        
+        self.movesBtn.backgroundColor = .white
+        self.movesBtn.setTitleColor(self.mainColor, for: .normal)
+        self.statsBtn.backgroundColor = .white
+        self.statsBtn.setTitleColor(self.mainColor, for: .normal)
+        self.evolutionsBtn.backgroundColor = self.mainColor
+        self.evolutionsBtn.setTitleColor(.white, for: .normal)
+        
+        
+        itemContainer.isHidden = true
+    }
+    
+    @IBAction func statsActionBtn(_ sender: Any) {
+        self.movesBtn.backgroundColor = .white
+        self.movesBtn.setTitleColor(self.mainColor, for: .normal)
+        self.statsBtn.backgroundColor = self.mainColor
+        self.statsBtn.setTitleColor(.white, for: .normal)
+        self.evolutionsBtn.backgroundColor = .white
+        self.evolutionsBtn.setTitleColor(self.mainColor, for: .normal)
+        itemContainer.isHidden = false
+    }
+    
+    @IBAction func movesActionBtn(_ sender: Any) {
+        self.movesBtn.backgroundColor = self.mainColor
+        self.movesBtn.setTitleColor(.white, for: .normal)
+        self.statsBtn.backgroundColor = .white
+        self.statsBtn.setTitleColor(self.mainColor, for: .normal)
+        self.evolutionsBtn.backgroundColor = .white
+        self.evolutionsBtn.setTitleColor(self.mainColor, for: .normal)
+        itemContainer.isHidden = true
+    }
+    
     
 
 }
+
+
 
 extension PokemonViewController{
     
@@ -102,6 +140,16 @@ extension PokemonViewController{
     }
     
 }
+
+//MARK: Actions
+
+extension PokemonViewController{
+    
+    
+    
+    
+}
+
 
 extension PokemonViewController{
     //MARK: Networking
@@ -178,6 +226,9 @@ extension PokemonViewController{
                 self.satkLbl.textColor = self.mainColor
                 self.sdefLbl.textColor = self.mainColor
                 self.spdLbl.textColor = self.mainColor
+                
+                
+                self.setGradientBackground(colorTop: self.mainColor)
             }
             
             if let img = pokemonData.sprites?.other?.officialArtwork?.frontDefault{
@@ -206,6 +257,17 @@ extension PokemonViewController{
                
             }
             
+            if let id = pokemonData.id{
+        
+                NetworkingProvider.shared.getPokemonSpecies(url: "https://pokeapi.co/api/v2/pokemon-species/\(id)/") { (species: SpeciesBase) in
+                    self.descriptionLbl.text = species.flavorTextEntries![7].flavorText?.capitalized
+                } failure: { (error: Error?) in
+                    print(error.debugDescription)
+                }
+
+                
+            }
+            
             
         } failure: { (error: Error?) in
             print(error.debugDescription)
@@ -217,3 +279,21 @@ extension PokemonViewController{
     }
     
 }
+
+extension PokemonViewController{
+
+
+    func setGradientBackground(colorTop: UIColor) {
+        
+        let colorBottom = UIColor(red: 25.0/255.0, green: 5.0/255.0, blue: 5.0/255.0, alpha: 1.0).cgColor
+                    
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.locations = [1.0, 0.0]
+        gradientLayer.frame = self.view.bounds
+                
+        self.view.layer.insertSublayer(gradientLayer, at:0)
+    }
+}
+
+

@@ -275,6 +275,9 @@
                                                         <state key="normal" title="EVOLUTIONS">
                                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="evolutionBtnAction:" destination="bsM-2e-Ye3" eventType="touchUpInside" id="oWx-gT-FA1"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RCr-ev-fmg">
                                                         <rect key="frame" x="8.5" y="0.0" width="109" height="40"/>
@@ -287,6 +290,9 @@
                                                         <state key="normal" title="STATS">
                                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="statsActionBtn:" destination="bsM-2e-Ye3" eventType="touchUpInside" id="Xw6-9g-u6j"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNG-aU-aaG">
                                                         <rect key="frame" x="266.5" y="0.0" width="109" height="40"/>
@@ -299,6 +305,9 @@
                                                         <state key="normal" title="MOVES">
                                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="movesActionBtn:" destination="bsM-2e-Ye3" eventType="touchUpInside" id="WyA-E1-Zis"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -329,7 +338,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wmc-V1-iSk">
-                                        <rect key="frame" x="25" y="377" width="364" height="193"/>
+                                        <rect key="frame" x="25" y="377" width="364" height="181"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LH4-Xu-Ciz">
                                                 <rect key="frame" x="0.0" y="2" width="364" height="24"/>
@@ -573,9 +582,15 @@
                                             <constraint firstItem="03l-VP-utt" firstAttribute="leading" secondItem="wmc-V1-iSk" secondAttribute="leading" id="ynV-ts-qhF"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lo3-EP-IlG">
+                                        <rect key="frame" x="25" y="558" width="364" height="12"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                        <color key="tintColor" systemColor="linkColor"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="lo3-EP-IlG" secondAttribute="bottom" id="1g5-j6-Gd5"/>
                                     <constraint firstItem="ImF-S4-dOc" firstAttribute="centerX" secondItem="Zra-xo-9hH" secondAttribute="centerX" id="2Lo-aL-RWy"/>
                                     <constraint firstAttribute="height" constant="570" id="5hZ-pa-EeW"/>
                                     <constraint firstItem="vPi-II-iGI" firstAttribute="leading" secondItem="Zra-xo-9hH" secondAttribute="leading" constant="15" id="Dea-Wd-xAh"/>
@@ -587,17 +602,20 @@
                                     <constraint firstItem="vPi-II-iGI" firstAttribute="top" secondItem="dmk-Jz-XeS" secondAttribute="bottom" constant="20" id="eh0-ys-QnE"/>
                                     <constraint firstItem="wmc-V1-iSk" firstAttribute="leading" secondItem="Zra-xo-9hH" secondAttribute="leading" constant="25" id="eke-cW-e43"/>
                                     <constraint firstItem="8xU-56-Izv" firstAttribute="centerX" secondItem="Zra-xo-9hH" secondAttribute="centerX" id="fqK-eS-Vrv"/>
-                                    <constraint firstAttribute="bottom" secondItem="wmc-V1-iSk" secondAttribute="bottom" id="g9O-ah-i7L"/>
+                                    <constraint firstItem="lo3-EP-IlG" firstAttribute="top" secondItem="Zra-xo-9hH" secondAttribute="top" constant="558" id="kqo-SR-dFq"/>
+                                    <constraint firstAttribute="trailing" secondItem="lo3-EP-IlG" secondAttribute="trailing" constant="25" id="mRL-wf-lhK"/>
                                     <constraint firstAttribute="trailing" secondItem="wmc-V1-iSk" secondAttribute="trailing" constant="25" id="nSw-sx-bwD"/>
                                     <constraint firstItem="tCX-wa-Zlf" firstAttribute="top" secondItem="ImF-S4-dOc" secondAttribute="bottom" constant="15" id="no5-l7-ycq"/>
                                     <constraint firstItem="dmk-Jz-XeS" firstAttribute="leading" secondItem="Zra-xo-9hH" secondAttribute="leading" constant="20" id="pgG-Nh-FL4"/>
                                     <constraint firstAttribute="trailing" secondItem="dmk-Jz-XeS" secondAttribute="trailing" constant="20" id="rJi-QB-mHY"/>
                                     <constraint firstItem="8xU-56-Izv" firstAttribute="top" secondItem="tCX-wa-Zlf" secondAttribute="bottom" constant="2" id="td7-y0-p9K"/>
+                                    <constraint firstItem="lo3-EP-IlG" firstAttribute="top" secondItem="wmc-V1-iSk" secondAttribute="bottom" id="uiw-au-rHR"/>
+                                    <constraint firstItem="lo3-EP-IlG" firstAttribute="leading" secondItem="Zra-xo-9hH" secondAttribute="leading" constant="25" id="xCw-3a-LYH"/>
                                     <constraint firstItem="ImF-S4-dOc" firstAttribute="top" secondItem="Zra-xo-9hH" secondAttribute="top" constant="-150" id="xNx-Cr-ZNN"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.33333333333333331" green="0.61960784313725492" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Zra-xo-9hH" firstAttribute="leading" secondItem="bVU-cK-VaR" secondAttribute="leading" id="1MZ-pN-14z"/>
                             <constraint firstAttribute="trailing" secondItem="Zra-xo-9hH" secondAttribute="trailing" id="ZG5-Bh-hQV"/>
@@ -613,11 +631,13 @@
                         <outlet property="defLbl" destination="zdk-K0-6QY" id="eg1-gf-dXL"/>
                         <outlet property="defPogress" destination="CV9-JZ-N1l" id="uVz-kh-fGz"/>
                         <outlet property="defValueLbl" destination="0ZH-6b-hb3" id="dQZ-Lb-R1a"/>
+                        <outlet property="descriptionLbl" destination="dmk-Jz-XeS" id="f8z-OD-k5H"/>
                         <outlet property="evolutionsBtn" destination="W7u-zF-gwF" id="uZk-7f-A4Y"/>
+                        <outlet property="evolutionsView" destination="lo3-EP-IlG" id="Gxl-qd-aNF"/>
                         <outlet property="hpLbl" destination="r7D-l0-qyO" id="wEY-B1-ODf"/>
                         <outlet property="hpPogress" destination="EbO-Bz-KLJ" id="JIL-5Q-OyC"/>
                         <outlet property="hpValueLbl" destination="9W2-RK-teH" id="xJf-pZ-QkB"/>
-                        <outlet property="mainView" destination="bVU-cK-VaR" id="jcf-zZ-9mF"/>
+                        <outlet property="itemContainer" destination="wmc-V1-iSk" id="kv5-j5-ead"/>
                         <outlet property="movesBtn" destination="TNG-aU-aaG" id="ELQ-lq-scQ"/>
                         <outlet property="pokemonImage" destination="ImF-S4-dOc" id="khD-U1-fi0"/>
                         <outlet property="pokemonName" destination="tCX-wa-Zlf" id="Nqz-HL-9TX"/>
@@ -645,8 +665,14 @@
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import Kingfisher
+import PokemonAPI
 
 class ViewController: UIViewController {
 
@@ -48,6 +49,7 @@ class ViewController: UIViewController {
 
         pokemonTableView.dataSource = self
         pokemonTableView.delegate = self
+        pokeApi()
         
         
         
@@ -158,8 +160,33 @@ extension ViewController {
         
             return gradient
        }
+    
+    
+    
 
 
+}
+
+extension ViewController{
+    // Example of calling a web service using an ID
+    func pokeApi() {
+        // Example of calling a web service using a name
+        PokemonAPI().pokemonService.fetchPokemon(7) { result in
+            switch result {
+            case .success(let pokemon):
+             //   self.pokemonLabel.text = pokemon.name
+            // bulbasaur
+                for move in pokemon.moves! {
+                    print("move name:\(move.move?.name), level")
+                }
+                
+                
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 

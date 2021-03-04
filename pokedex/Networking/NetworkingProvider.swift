@@ -49,6 +49,20 @@ final class NetworkingProvider{
         }
     }
     
+    func getPokemonSpecies(url:String,success: @escaping (_ species:SpeciesBase)->(), failure: @escaping (_ error: Error?) ->() ){
+        let url = "\(url)"
+        AF.request(url, method: .get).validate(statusCode: KStatusOK).responseDecodable(of: SpeciesBase.self ){
+            response in
+            if let pokemon = response.value{
+                print(pokemon.flavorTextEntries?[7].flavorText ?? "nill")
+                success(pokemon)
+            }else{
+                failure(response.error)
+            }
+            
+        }
+    }
+    
   
     
 }
