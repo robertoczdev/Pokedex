@@ -40,6 +40,14 @@
 		84D776F725E61AC200B559E2 /* PokemonBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D776F625E61AC200B559E2 /* PokemonBase.swift */; };
 		84E6B8CA25E62A3100A4BDD0 /* Ability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E6B8C925E62A3100A4BDD0 /* Ability.swift */; };
 		84E6B8CF25E62A9600A4BDD0 /* Sprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E6B8CE25E62A9600A4BDD0 /* Sprites.swift */; };
+		84F3085725F27333007A89D2 /* BottomPopupPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3084F25F27331007A89D2 /* BottomPopupPresentAnimator.swift */; };
+		84F3085825F27333007A89D2 /* BottomPopupPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3085025F27331007A89D2 /* BottomPopupPresentationController.swift */; };
+		84F3085925F27333007A89D2 /* BottomPopupDismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3085125F27332007A89D2 /* BottomPopupDismissAnimator.swift */; };
+		84F3085A25F27333007A89D2 /* BottomPopupUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3085225F27332007A89D2 /* BottomPopupUtils.swift */; };
+		84F3085B25F27333007A89D2 /* BottomPopupDismissInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3085325F27332007A89D2 /* BottomPopupDismissInteractionController.swift */; };
+		84F3085C25F27333007A89D2 /* BottomPopupNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3085425F27332007A89D2 /* BottomPopupNavigationController.swift */; };
+		84F3085D25F27333007A89D2 /* BottomPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3085525F27333007A89D2 /* BottomPopupViewController.swift */; };
+		84F3085E25F27333007A89D2 /* BottomPopupTransitionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3085625F27333007A89D2 /* BottomPopupTransitionHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +104,14 @@
 		84D776F625E61AC200B559E2 /* PokemonBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonBase.swift; sourceTree = "<group>"; };
 		84E6B8C925E62A3100A4BDD0 /* Ability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ability.swift; sourceTree = "<group>"; };
 		84E6B8CE25E62A9600A4BDD0 /* Sprites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprites.swift; sourceTree = "<group>"; };
+		84F3084F25F27331007A89D2 /* BottomPopupPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupPresentAnimator.swift; sourceTree = "<group>"; };
+		84F3085025F27331007A89D2 /* BottomPopupPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupPresentationController.swift; sourceTree = "<group>"; };
+		84F3085125F27332007A89D2 /* BottomPopupDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupDismissAnimator.swift; sourceTree = "<group>"; };
+		84F3085225F27332007A89D2 /* BottomPopupUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupUtils.swift; sourceTree = "<group>"; };
+		84F3085325F27332007A89D2 /* BottomPopupDismissInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupDismissInteractionController.swift; sourceTree = "<group>"; };
+		84F3085425F27332007A89D2 /* BottomPopupNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupNavigationController.swift; sourceTree = "<group>"; };
+		84F3085525F27333007A89D2 /* BottomPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupViewController.swift; sourceTree = "<group>"; };
+		84F3085625F27333007A89D2 /* BottomPopupTransitionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomPopupTransitionHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +231,7 @@
 		84404C9E25DEE20D00D84F92 /* pokedex */ = {
 			isa = PBXGroup;
 			children = (
+				84F3084E25F2730B007A89D2 /* BottomToTop */,
 				8435153D25E01D52002F259C /* Networking */,
 				843B4C1525DFF11F00262D13 /* Controller */,
 				843B4C1425DFF11800262D13 /* View */,
@@ -246,6 +263,21 @@
 				84404CC625DEE21100D84F92 /* Info.plist */,
 			);
 			path = pokedexUITests;
+			sourceTree = "<group>";
+		};
+		84F3084E25F2730B007A89D2 /* BottomToTop */ = {
+			isa = PBXGroup;
+			children = (
+				84F3085125F27332007A89D2 /* BottomPopupDismissAnimator.swift */,
+				84F3085325F27332007A89D2 /* BottomPopupDismissInteractionController.swift */,
+				84F3085425F27332007A89D2 /* BottomPopupNavigationController.swift */,
+				84F3084F25F27331007A89D2 /* BottomPopupPresentAnimator.swift */,
+				84F3085025F27331007A89D2 /* BottomPopupPresentationController.swift */,
+				84F3085625F27333007A89D2 /* BottomPopupTransitionHandler.swift */,
+				84F3085225F27332007A89D2 /* BottomPopupUtils.swift */,
+				84F3085525F27333007A89D2 /* BottomPopupViewController.swift */,
+			);
+			path = BottomToTop;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,10 +422,13 @@
 			files = (
 				841FC3B825F13B2200DEECA3 /* Languaje.swift in Sources */,
 				8435154025E01DA8002F259C /* Pokemons.swift in Sources */,
+				84F3085D25F27333007A89D2 /* BottomPopupViewController.swift in Sources */,
+				84F3085825F27333007A89D2 /* BottomPopupPresentationController.swift in Sources */,
 				848F9FAC25E6B7D400189541 /* Stats.swift in Sources */,
 				84404CAA25DEE20D00D84F92 /* pokedex.xcdatamodeld in Sources */,
 				843B4C0925DF5CFF00262D13 /* Extensions.swift in Sources */,
 				848F9FA725E6B0FC00189541 /* Types.swift in Sources */,
+				84F3085B25F27333007A89D2 /* BottomPopupDismissInteractionController.swift in Sources */,
 				841FC3B325F13ACA00DEECA3 /* FlavorTextEntries.swift in Sources */,
 				848F9FB125E6B7FE00189541 /* Stat.swift in Sources */,
 				847ECCBF25E80BD5000B9A5A /* OficcialArtwork.swift in Sources */,
@@ -401,17 +436,22 @@
 				84D776F725E61AC200B559E2 /* PokemonBase.swift in Sources */,
 				841FC3AB25F139A300DEECA3 /* SpeciesBase.swift in Sources */,
 				847ECCBA25E80AEA000B9A5A /* Other.swift in Sources */,
+				84F3085E25F27333007A89D2 /* BottomPopupTransitionHandler.swift in Sources */,
+				84F3085925F27333007A89D2 /* BottomPopupDismissAnimator.swift in Sources */,
 				84404CA425DEE20D00D84F92 /* ViewController.swift in Sources */,
 				848F017025E36415006557F8 /* Pokemon.swift in Sources */,
 				848F9F9F25E6B0D100189541 /* Type.swift in Sources */,
 				841FC3BD25F13B3100DEECA3 /* Version.swift in Sources */,
 				84404CA025DEE20D00D84F92 /* AppDelegate.swift in Sources */,
+				84F3085C25F27333007A89D2 /* BottomPopupNavigationController.swift in Sources */,
 				84569FBF25E61B7E00649896 /* Abilities.swift in Sources */,
 				845C3C3A25E2BE9E006D48A0 /* PokemonViewController.swift in Sources */,
 				84E6B8CA25E62A3100A4BDD0 /* Ability.swift in Sources */,
 				84404CA225DEE20D00D84F92 /* SceneDelegate.swift in Sources */,
 				84E6B8CF25E62A9600A4BDD0 /* Sprites.swift in Sources */,
+				84F3085A25F27333007A89D2 /* BottomPopupUtils.swift in Sources */,
 				849B088025E36AD9002ECEBE /* Displayable.swift in Sources */,
+				84F3085725F27333007A89D2 /* BottomPopupPresentAnimator.swift in Sources */,
 				845C3C4325E3079F006D48A0 /* PokemonCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

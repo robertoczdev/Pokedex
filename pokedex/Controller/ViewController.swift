@@ -21,8 +21,10 @@ class ViewController: UIViewController {
     
     
     private let reusableCell:String = "pokemonCell"
-    var items: [Displayable] = []
+    lazy var items: [Displayable] = []
+    lazy var itemsCopy: [Displayable] = []
     var selectedItem: Displayable?
+    var id:Int?
     
 
     //MARK: Outlets
@@ -46,10 +48,11 @@ class ViewController: UIViewController {
        
         //table view
         setUpData()
-
+        
+        searchBar.delegate = self
         pokemonTableView.dataSource = self
         pokemonTableView.delegate = self
-        pokeApi()
+        
         
         
         
@@ -81,7 +84,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        return searchBar.text!.isEmpty ? self.items.count : self.itemsCopy.count
     }
     
     
@@ -90,7 +93,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reusableCell) as! PokemonCell
         //let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
-        let item = self.items[indexPath.row]
+        let item = searchBar.text!.isEmpty ? self.items[indexPath.row] : self.itemsCopy[indexPath.row]
         let id = Int(item.urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())
         cell.pokemonNameLbl?.text = item.nameLabelText
         let idFormated = String(format: "%03d", id!)
@@ -104,7 +107,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        selectedItem = items[indexPath.row]
+        self.id = searchBar.text!.isEmpty ? Int(items[indexPath.row].urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())! : Int(itemsCopy[indexPath.row].urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())!
+        
+        selectedItem = searchBar.text!.isEmpty ? items[indexPath.row] : itemsCopy[indexPath.row]
         return indexPath
 
     }
@@ -114,6 +119,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
           return
         }
         destinationVC.data = selectedItem
+        destinationVC.idPokemon = self.id
     }
     
     
@@ -126,9 +132,10 @@ extension ViewController{
     //MARK: Networking
     
     func setUpData(){
-        NetworkingProvider.shared.getPokemons(url: "https://pokeapi.co/api/v2/", range: "pokemon?limit=100") { (pokemon: [Pokemon]) in
+        NetworkingProvider.shared.getPokemons(url: "https://pokeapi.co/api/v2/", range: "pokemon?limit=1800") { (pokemon: [Pokemon]) in
             self.items = pokemon
-            
+            self.itemsCopy = pokemon
+            print("items copy count\(self.itemsCopy.count)")
             self.tableView.reloadData()
         } failure: { (error: Error?) in
             print(error.debugDescription)
@@ -167,26 +174,48 @@ extension ViewController {
 
 }
 
-extension ViewController{
-    // Example of calling a web service using an ID
-    func pokeApi() {
-        // Example of calling a web service using a name
-        PokemonAPI().pokemonService.fetchPokemon(7) { result in
-            switch result {
-            case .success(let pokemon):
-             //   self.pokemonLabel.text = pokemon.name
-            // bulbasaur
-                for move in pokemon.moves! {
-                    print("move name:\(move.move?.name), level")
-                }
-                
-                
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+
+
+extension ViewController:UISearchBarDelegate{
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let searchTerm = searchBar.text else {
+            return
         }
+        print(searchTerm)
+        /*self.itemsCopy = self.items
+        self.items = searchPokemon(text: searchTerm, items: self.itemsCopy)
+        self.tableView.reloadData()
+        self.items = self.itemsCopy
+       */
+        
+        searchPokemon(text: searchTerm, items: self.items)
+        self.pokemonTableView.reloadData()
     }
 }
 
+
+extension ViewController{
+    func searchPokemon(text:String, items:[Displayable]) {
+        var coincidences: [Displayable] = []
+        
+        /*for item in items {
+            if item.nameLabelText.lowercased().contains(text.lowercased()) {
+                coincidences.append(item)
+                print(item.nameLabelText)
+            }
+        }*/
+
+        coincidences = items.filter { $0.nameLabelText.lowercased().contains(text.lowercased())}
+        print(coincidences.count)
+        print("items copy count search pokemon\(coincidences.count)")
+        
+        self.itemsCopy = coincidences
+        self.pokemonTableView.reloadData()
+        
+        //return coincidences
+    
+    }
+}
 
