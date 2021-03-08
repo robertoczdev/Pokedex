@@ -64,6 +64,7 @@ private extension BottomPopupPresentationController {
         dimmingView = UIView()
         dimmingView.frame = CGRect(origin: .zero, size: UIScreen.main.bounds.size)
         dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0)
+        dimmingView.backgroundColor = nil
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
         swipeGesture.direction = [.down, .up]

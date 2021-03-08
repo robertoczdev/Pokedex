@@ -8,6 +8,14 @@
 import XCTest
 
 class pokedexUITests: XCTestCase {
+    var app: XCUIApplication!
+    override func setUp() {
+       continueAfterFailure = false
+
+      app = XCUIApplication()
+      app.launch()
+    }
+
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -39,4 +47,53 @@ class pokedexUITests: XCTestCase {
             }
         }
     }
+    
+    
+    
+    
+    func testSearchAction(){
+        app.searchBar.tap()
+        app.searchBar.typeText("p")
+        app.searchBar.typeText("i")
+        app.searchBar.typeText("k")
+        app.searchBar.typeText("a")
+        app.searchBar.typeText("c")
+        app.searchBar.typeText("h")
+        app.searchBar.typeText("u")
+        app.tables.staticTexts["#025"].tap()
+        app/*@START_MENU_TOKEN@*/.buttons["back"]/*[[".otherElements[\"bottomPopupView\"].buttons[\"back\"]",".buttons[\"back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.searchBar.buttons["Clear text"].tap()
+        
+        app.searchBar.typeText("c")
+        app.searchBar.typeText("h")
+        app.searchBar.typeText("a")
+        app.searchBar.typeText("r")
+        app.tables.staticTexts["charizard"].tap()
+        app/*@START_MENU_TOKEN@*/.buttons["back"]/*[[".otherElements[\"bottomPopupView\"].buttons[\"back\"]",".buttons[\"back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.searchBar.buttons["Clear text"].tap()
+        
+        app.searchBar.typeText("m")
+        app.searchBar.typeText("e")
+        app.searchBar.typeText("t")
+        app.searchBar.typeText("a")
+        app.searchBar.typeText("p")
+        app.searchBar.typeText("o")
+        app.searchBar.typeText("d")
+        app.tables.staticTexts["metapod"].tap()
+        app/*@START_MENU_TOKEN@*/.buttons["back"]/*[[".otherElements[\"bottomPopupView\"].buttons[\"back\"]",".buttons[\"back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.searchBar.buttons["Clear text"].tap()
+
+        
+        
+    }
+    
+    
+    
+}
+
+private extension XCUIApplication{
+    var searchBar: XCUIElement { self.otherElements["searchBar"]}
+    
+    
+    
 }

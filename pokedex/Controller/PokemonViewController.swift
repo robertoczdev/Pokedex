@@ -8,14 +8,38 @@
 import UIKit
 import Kingfisher
 
-class PokemonViewController: UIViewController {
+class PokemonViewController: BottomPopupViewController {
     
     //MARK: Variables
     var data:Displayable?
     var idPokemon:Int?
     var mainColor:UIColor = UIColor.rgb(red: 101, green: 175, blue: 229)
+    var pokemonSprites : Sprites?
     
+    var height: CGFloat?
+    var topCornerRadius: CGFloat?
+    var presentDuration: Double?
+    var dismissDuration: Double?
+    var shouldDismissInteractivelty: Bool?
+    var text: String?
+    var index:Int = 5
     
+    //MARK: Properties
+    
+    // Bottom popup attribute variables
+    // You can override the desired variable to change appearance
+    
+    override var popupHeight: CGFloat { return height ?? CGFloat(300) }
+    
+    override var popupTopCornerRadius: CGFloat { return topCornerRadius ?? CGFloat(10) }
+    
+    override var popupPresentDuration: Double { return presentDuration ?? 1.0 }
+    
+    override var popupDismissDuration: Double { return dismissDuration ?? 1.0 }
+    
+    override var popupShouldDismissInteractivelty: Bool { return shouldDismissInteractivelty ?? true }
+    
+    override var popupDimmingViewAlpha: CGFloat { return BottomPopupConstants.kDimmingViewDefaultAlphaValue }
     
         
     
@@ -27,11 +51,16 @@ class PokemonViewController: UIViewController {
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var containerView: UIView!
+    
     @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var typeLabel2: UILabel!
+    @IBOutlet weak var typeLabel3: UILabel!
+    
     @IBOutlet weak var evolutionsBtn: UIButton!
     @IBOutlet weak var statsBtn: UIButton!
     @IBOutlet weak var movesBtn: UIButton!
     @IBOutlet weak var descriptionLbl: UILabel!
+    
     
     @IBOutlet weak var hpValueLbl: UILabel!
     @IBOutlet weak var atkValueLbl: UILabel!
@@ -81,6 +110,8 @@ class PokemonViewController: UIViewController {
     }
     
     
+    
+    
     @IBAction func evolutionBtnAction(_ sender: Any) {
         
         self.movesBtn.backgroundColor = .white
@@ -91,7 +122,19 @@ class PokemonViewController: UIViewController {
         self.evolutionsBtn.setTitleColor(.white, for: .normal)
         
         
-        itemContainer.isHidden = true
+        guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "evolitionsViewController") as? EvolutionsViewController else { return }
+        popupVC.height = view.bounds.height
+        popupVC.topCornerRadius = 0
+        popupVC.presentDuration = 00.5
+        popupVC.dismissDuration = 00.3
+        
+        //popupVC.shouldDismissInteractivelty = dismissInteractivelySwitch.isOn
+        popupVC.popupDelegate = self
+        popupVC.text = "seteando texto desde el primer VC"
+        present(popupVC, animated: true, completion: nil)
+        popupVC.pokemonName = self.pokemonName.text
+        popupVC.id = self.idPokemon
+        popupVC.mainColor = self.mainColor
     }
     
     @IBAction func statsActionBtn(_ sender: Any) {
@@ -101,7 +144,7 @@ class PokemonViewController: UIViewController {
         self.statsBtn.setTitleColor(.white, for: .normal)
         self.evolutionsBtn.backgroundColor = .white
         self.evolutionsBtn.setTitleColor(self.mainColor, for: .normal)
-        itemContainer.isHidden = false
+        
     }
     
     @IBAction func movesActionBtn(_ sender: Any) {
@@ -111,14 +154,38 @@ class PokemonViewController: UIViewController {
         self.statsBtn.setTitleColor(self.mainColor, for: .normal)
         self.evolutionsBtn.backgroundColor = .white
         self.evolutionsBtn.setTitleColor(self.mainColor, for: .normal)
-        itemContainer.isHidden = true
+        
+        guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "movesViewController") as? MovesViewController else { return }
+        popupVC.height = view.bounds.height
+        popupVC.topCornerRadius = 0
+        popupVC.presentDuration = 00.4
+        popupVC.dismissDuration = 00.3
+        
+        //popupVC.shouldDismissInteractivelty = dismissInteractivelySwitch.isOn
+        popupVC.popupDelegate = self
+        
+        present(popupVC, animated: true, completion: nil)
+        popupVC.pokemonName = self.pokemonName.text
+        popupVC.id = self.idPokemon
+        popupVC.mainColor = self.mainColor
+    }
+    
+    
+    @IBAction func hideBtnAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func leftBtnAction(_ sender: Any) {
+        self.pokemonImage.kf.setImage(with: URL(string: (self.pokemonSprites?.backDefault!)!))
+    }
+    
+    @IBAction func rightBtnAction(_ sender: Any) {
+        self.pokemonImage.kf.setImage(with: URL(string: (self.pokemonSprites?.frontDefault!)!))
     }
     
     
 
 }
-
-
 
 extension PokemonViewController{
     
@@ -128,6 +195,12 @@ extension PokemonViewController{
 
         typeLabel.layer.cornerRadius = 10
         typeLabel.layer.masksToBounds = true
+        
+        typeLabel3.layer.cornerRadius = 10
+        typeLabel3.layer.masksToBounds = true
+        
+        typeLabel2.layer.cornerRadius = 10
+        typeLabel2.layer.masksToBounds = true
        
    
         statsBtn.layer.cornerRadius = 20
@@ -135,20 +208,12 @@ extension PokemonViewController{
         evolutionsBtn.layer.cornerRadius = 20
   
         movesBtn.layer.cornerRadius = 20
+        typeLabel2.isHidden = true
+        typeLabel3.isHidden = true
         
     }
     
 }
-
-//MARK: Actions
-
-extension PokemonViewController{
-    
-    
-    
-    
-}
-
 
 extension PokemonViewController{
     //MARK: Networking
@@ -158,76 +223,181 @@ extension PokemonViewController{
         self.pokemonName.text = data?.nameLabelText
         
         NetworkingProvider.shared.getPokemonData(url:"https://pokeapi.co/api/v2/pokemon/\(self.idPokemon!)") { (pokemonData: PokemonBase) in
+            if let sprites = pokemonData.sprites{
+                self.pokemonSprites = sprites
+            }
             if let types = pokemonData.types{
-                self.typeLabel.text = types[0].type?.name
-                
-                switch types[0].type?.name {
-                case "water":
-                    self.mainColor = UIColor.water()
-                case "grass":
-                    self.mainColor = UIColor.grass()
-                case "normal":
-                    self.mainColor = UIColor.normal()
-                case "fighting":
-                    self.mainColor = UIColor.fight()
-                case "poison":
-                    self.mainColor = UIColor.poison()
-                case "ground":
-                    self.mainColor = UIColor.ground()
-                case "rock":
-                    self.mainColor = UIColor.rock()
-                case "bug":
-                    self.mainColor = UIColor.bug()
-                case "ghost":
-                    self.mainColor = UIColor.ghost()
-                case "steel":
-                    self.mainColor = UIColor.steel()
-                case "fire":
-                    self.mainColor = UIColor.fire()
-                case "electric":
-                    self.mainColor = UIColor.electric()
-                case "psychic":
-                    self.mainColor = UIColor.psychic()
-                case "ice":
-                    self.mainColor = UIColor.ice()
-                case "dragon":
-                    self.mainColor = UIColor.dragon()
-                case "dark":
-                    self.mainColor = UIColor.dark()
-                case "fairy":
-                    self.mainColor = UIColor.fairy()
+                for item in types {
+                    print("type name: \(item.type?.name)")
+                }
+                var i:Int = 0
+                while i < types.count {
                     
-                default:
-                    self.mainColor = UIColor.normal()
+                    
+                        self.typeLabel.text = types[0].type?.name
+                        
+                        switch types[0].type?.name {
+                        case "water":
+                            self.mainColor = UIColor.water()
+                        case "grass":
+                            self.mainColor = UIColor.grass()
+                        case "normal":
+                            self.mainColor = UIColor.normal()
+                        case "fighting":
+                            self.mainColor = UIColor.fight()
+                        case "poison":
+                            self.mainColor = UIColor.poison()
+                        case "ground":
+                            self.mainColor = UIColor.ground()
+                        case "rock":
+                            self.mainColor = UIColor.rock()
+                        case "bug":
+                            self.mainColor = UIColor.bug()
+                        case "ghost":
+                            self.mainColor = UIColor.ghost()
+                        case "steel":
+                            self.mainColor = UIColor.steel()
+                        case "fire":
+                            self.mainColor = UIColor.fire()
+                        case "electric":
+                            self.mainColor = UIColor.electric()
+                        case "psychic":
+                            self.mainColor = UIColor.psychic()
+                        case "ice":
+                            self.mainColor = UIColor.ice()
+                        case "dragon":
+                            self.mainColor = UIColor.dragon()
+                        case "dark":
+                            self.mainColor = UIColor.dark()
+                        case "fairy":
+                            self.mainColor = UIColor.fairy()
+                            
+                        default:
+                            self.mainColor = UIColor.normal()
+                        }
+                        
+                        
+                        self.movesBtn.backgroundColor = .white
+                        self.movesBtn.setTitleColor(self.mainColor, for: .normal)
+                        self.statsBtn.backgroundColor = self.mainColor
+                        self.statsBtn.setTitleColor(.white, for: .normal)
+                        self.typeLabel.backgroundColor = self.mainColor
+                        self.evolutionsBtn.backgroundColor = .white
+                        self.evolutionsBtn.setTitleColor(self.mainColor, for: .normal)
+                        self.view.backgroundColor = self.mainColor
+                        
+                        
+                        self.hpPogress.progressTintColor = self.mainColor
+                        self.atkProgress.progressTintColor = self.mainColor
+                        self.defPogress.progressTintColor = self.mainColor
+                        self.stakProgress.progressTintColor = self.mainColor
+                        self.sdefProgress.progressTintColor = self.mainColor
+                        self.spdProgress.progressTintColor = self.mainColor
+                        
+                        self.hpLbl.textColor = self.mainColor
+                        self.atkLbl.textColor = self.mainColor
+                        self.defLbl.textColor = self.mainColor
+                        self.satkLbl.textColor = self.mainColor
+                        self.sdefLbl.textColor = self.mainColor
+                        self.spdLbl.textColor = self.mainColor
+                        
+                        
+                        self.setGradientBackground(colorTop: self.mainColor)
+                    if i == 1
+                        {self.typeLabel2.isHidden = false
+                        self.typeLabel2.text = types[1].type?.name
+                        
+                        switch types[1].type?.name {
+                        case "water":
+                            self.typeLabel2.backgroundColor = UIColor.water()
+                        case "grass":
+                            self.typeLabel2.backgroundColor = UIColor.grass()
+                        case "normal":
+                            self.typeLabel2.backgroundColor = UIColor.normal()
+                        case "fighting":
+                            self.typeLabel2.backgroundColor = UIColor.fight()
+                        case "poison":
+                            self.typeLabel2.backgroundColor = UIColor.poison()
+                        case "ground":
+                            self.typeLabel2.backgroundColor = UIColor.ground()
+                        case "rock":
+                            self.typeLabel2.backgroundColor = UIColor.rock()
+                        case "bug":
+                            self.typeLabel2.backgroundColor = UIColor.bug()
+                        case "ghost":
+                            self.typeLabel2.backgroundColor = UIColor.ghost()
+                        case "steel":
+                            self.typeLabel2.backgroundColor = UIColor.steel()
+                        case "fire":
+                            self.typeLabel2.backgroundColor = UIColor.fire()
+                        case "electric":
+                            self.typeLabel2.backgroundColor = UIColor.electric()
+                        case "psychic":
+                            self.typeLabel2.backgroundColor = UIColor.psychic()
+                        case "ice":
+                            self.typeLabel2.backgroundColor = UIColor.ice()
+                        case "dragon":
+                            self.typeLabel2.backgroundColor = UIColor.dragon()
+                        case "dark":
+                            self.typeLabel2.backgroundColor = UIColor.dark()
+                        case "fairy":
+                            self.typeLabel2.backgroundColor = UIColor.fairy()
+                            
+                        default:
+                            self.typeLabel2.backgroundColor = UIColor.normal()
+                            
+                        }}
+                    if i == 2
+                        {self.typeLabel3.isHidden = false
+                        self.typeLabel3.text = types[2].type?.name
+                        
+                        switch types[2].type?.name {
+                        case "water":
+                            self.typeLabel3.backgroundColor = UIColor.water()
+                        case "grass":
+                            self.typeLabel3.backgroundColor = UIColor.grass()
+                        case "normal":
+                            self.typeLabel3.backgroundColor = UIColor.normal()
+                        case "fighting":
+                            self.typeLabel3.backgroundColor = UIColor.fight()
+                        case "poison":
+                            self.typeLabel3.backgroundColor = UIColor.poison()
+                        case "ground":
+                            self.typeLabel3.backgroundColor = UIColor.ground()
+                        case "rock":
+                            self.typeLabel3.backgroundColor = UIColor.rock()
+                        case "bug":
+                            self.typeLabel3.backgroundColor = UIColor.bug()
+                        case "ghost":
+                            self.typeLabel3.backgroundColor = UIColor.ghost()
+                        case "steel":
+                            self.typeLabel3.backgroundColor = UIColor.steel()
+                        case "fire":
+                            self.typeLabel3.backgroundColor = UIColor.fire()
+                        case "electric":
+                            self.typeLabel3.backgroundColor = UIColor.electric()
+                        case "psychic":
+                            self.typeLabel3.backgroundColor = UIColor.psychic()
+                        case "ice":
+                            self.typeLabel3.backgroundColor = UIColor.ice()
+                        case "dragon":
+                            self.typeLabel3.backgroundColor = UIColor.dragon()
+                        case "dark":
+                            self.typeLabel3.backgroundColor = UIColor.dark()
+                        case "fairy":
+                            self.typeLabel3.backgroundColor = UIColor.fairy()
+                            
+                        default:
+                            self.typeLabel3.backgroundColor = UIColor.normal()
+                            
+                        }}
+                    
+                    
+                    
+                    i = i + 1
                 }
                 
-                
-                self.movesBtn.backgroundColor = .white
-                self.movesBtn.setTitleColor(self.mainColor, for: .normal)
-                self.statsBtn.backgroundColor = self.mainColor
-                self.statsBtn.setTitleColor(.white, for: .normal)
-                self.typeLabel.backgroundColor = self.mainColor
-                self.evolutionsBtn.backgroundColor = .white
-                self.evolutionsBtn.setTitleColor(self.mainColor, for: .normal)
-                self.view.backgroundColor = self.mainColor
-                
-                
-                self.hpPogress.progressTintColor = self.mainColor
-                self.atkProgress.progressTintColor = self.mainColor
-                self.defPogress.progressTintColor = self.mainColor
-                self.stakProgress.progressTintColor = self.mainColor
-                self.sdefProgress.progressTintColor = self.mainColor
-                self.spdProgress.progressTintColor = self.mainColor
-                
-                self.hpLbl.textColor = self.mainColor
-                self.atkLbl.textColor = self.mainColor
-                self.defLbl.textColor = self.mainColor
-                self.satkLbl.textColor = self.mainColor
-                self.sdefLbl.textColor = self.mainColor
-                self.spdLbl.textColor = self.mainColor
-                
-                
-                self.setGradientBackground(colorTop: self.mainColor)
+               
             }
             
             if let img = pokemonData.sprites?.other?.officialArtwork?.frontDefault{
@@ -296,30 +466,11 @@ extension PokemonViewController{
     }
 }
 
-/*
- Continuous integration (CI) and continuous delivery (CD) embody a culture, set of operating principles, and collection of practices that enable application development teams to deliver code changes more frequently and reliably. The implementation is also known as the CI/CD pipeline.
+//MARK: Pop up delegate
 
- CI/CD is one of the best practices for devops teams to implement. It is also an agile methodology best practice, as it enables software development teams to focus on meeting business requirements, code quality, and security because deployment steps are automated.
+extension PokemonViewController: BottomPopupDelegate{
+    
+}
 
- TABLE OF CONTENTS
- CI/CD defined
- How continuous integration improves collaboration and quality
- Continuous testing goes beyond test automation
- The CD pipeline automates changes to multiple environments
- Implementing CI/CD pipelines with Kubernetes and serverless architectures
- SHOW MORE
- CI/CD defined
- Continuous integration is a coding philosophy and set of practices that drive development teams to implement small changes and check in code to version control repositories frequently. Because most modern applications require developing code in different platforms and tools, the team needs a mechanism to integrate and validate its changes.
-
- [ Also on InfoWorld: Get started with CI/CD: Automating your application delivery with CI/CD pipelines ]
- The technical goal of CI is to establish a consistent and automated way to build, package, and test applications. With consistency in the integration process in place, teams are more likely to commit code changes more frequently, which leads to better collaboration and software quality.
-
- Continuous delivery picks up where continuous integration ends. CD automates the delivery of applications to selected infrastructure environments. Most teams work with multiple environments other than the production, such as development and testing environments, and CD ensures there is an automated way to push code changes to them.
-
- CI/CD tools help store the environment-specific parameters that must be packaged with each delivery. CI/CD automation then performs any necessary service calls to web servers, databases, and other services that may need to be restarted or follow other procedures when applications are deployed.
-
- Continuous integration and continuous delivery require continuous testing because the objective is to deliver quality applications and code to users. Continuous testing is often implemented as a set of automated regression, performance, and other tests that are executed in the CI/CD pipeline.
- 
- */
 
 

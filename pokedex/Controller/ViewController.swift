@@ -10,7 +10,7 @@ import Alamofire
 import Kingfisher
 import PokemonAPI
 
-class ViewController: UIViewController {
+class ViewController: UIViewController  {
 
     
     
@@ -54,7 +54,10 @@ class ViewController: UIViewController {
         pokemonTableView.delegate = self
         
         
+        //MARK: Accesibility identifiers
         
+        self.searchBar.accessibilityIdentifier = "searchBar"
+
         
     }
     
@@ -110,9 +113,26 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
         self.id = searchBar.text!.isEmpty ? Int(items[indexPath.row].urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())! : Int(itemsCopy[indexPath.row].urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())!
         
         selectedItem = searchBar.text!.isEmpty ? items[indexPath.row] : itemsCopy[indexPath.row]
+        
+        
         return indexPath
 
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "pokemonViewController") as? PokemonViewController else { return }
+        popupVC.height = view.bounds.height
+        popupVC.topCornerRadius = 0
+        popupVC.presentDuration = 00.5
+        popupVC.dismissDuration = 00.3
+        //popupVC.shouldDismissInteractivelty = dismissInteractivelySwitch.isOn
+        popupVC.popupDelegate = self
+        popupVC.text = "seteando texto desde el primer VC"
+        present(popupVC, animated: true, completion: nil)
+        popupVC.data = selectedItem
+        popupVC.idPokemon = self.id
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationVC = segue.destination as? PokemonViewController else {
@@ -120,6 +140,23 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
         }
         destinationVC.data = selectedItem
         destinationVC.idPokemon = self.id
+    }
+    
+    
+    func createAlert() {
+        // Create new Alert
+        let dialogMessage = UIAlertController(title: "Confirm", message: "Are you sure you want to delete this?", preferredStyle: .alert)
+        
+        // Create OK button with action handler
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            
+         })
+        
+        //Add OK button to a dialog message
+        dialogMessage.addAction(ok)
+
+        // Present Alert to
+        self.present(dialogMessage, animated: true, completion: nil)
     }
     
     
@@ -216,6 +253,33 @@ extension ViewController{
         
         //return coincidences
     
+    }
+}
+
+//MARK: Bottom Pop up delegate
+extension ViewController: BottomPopupDelegate{
+    func bottomPopupViewLoaded() {
+        print("bottomPopupViewLoaded")
+    }
+    
+    func bottomPopupWillAppear() {
+        print("bottomPopupWillAppear")
+    }
+    
+    func bottomPopupDidAppear() {
+        print("bottomPopupDidAppear")
+    }
+    
+    func bottomPopupWillDismiss() {
+        print("bottomPopupWillDismiss")
+    }
+    
+    func bottomPopupDidDismiss() {
+        print("bottomPopupDidDismiss")
+    }
+    
+    func bottomPopupDismissInteractionPercentChanged(from oldValue: CGFloat, to newValue: CGFloat) {
+        print("bottomPopupDismissInteractionPercentChanged fromValue: \(oldValue) to: \(newValue)")
     }
 }
 

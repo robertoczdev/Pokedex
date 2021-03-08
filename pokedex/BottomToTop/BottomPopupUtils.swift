@@ -46,6 +46,6 @@ public struct BottomPopupConstants {
     static let kDefaultDismissDuration = 0.5
     static let dismissInteractively = true
     static let shouldBeganDismiss = true
-    static let kDimmingViewDefaultAlphaValue: CGFloat = 0.5
+    static let kDimmingViewDefaultAlphaValue: CGFloat = 0
     static let defaultPopupViewAccessibilityIdentifier: String = "bottomPopupView"
 }
