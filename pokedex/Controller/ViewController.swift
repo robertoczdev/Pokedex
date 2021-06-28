@@ -8,24 +8,24 @@
 import UIKit
 import Alamofire
 import Kingfisher
-import PokemonAPI
 
 class ViewController: UIViewController  {
 
-    
-    
-    
-    
-    
     //MARK: Variables
     
     
     private let reusableCell:String = "pokemonCell"
     lazy var items: [Displayable] = []
     lazy var itemsCopy: [Displayable] = []
+    var pokemon = [Pokemon]()
     var selectedItem: Displayable?
     var id:Int?
-    
+    typealias DataSource = UITableViewDiffableDataSource<Section,Pokemon>
+    private lazy var dataSource = makeDataSource()
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section,Pokemon>
+    enum Section {
+      case main
+    }
 
     //MARK: Outlets
     
@@ -40,25 +40,42 @@ class ViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-       
-        
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-       
-        //table view
         setUpData()
-        
         searchBar.delegate = self
-        pokemonTableView.dataSource = self
         pokemonTableView.delegate = self
-        
-        
         //MARK: Accesibility identifiers
         
         self.searchBar.accessibilityIdentifier = "searchBar"
 
         
+    }
+    
+    func makeDataSource() -> DataSource {
+        let datasource = DataSource(tableView: tableView, cellProvider: { (tableView, indexPath, pokemon) -> UITableViewCell? in
+            let cell = tableView.dequeueReusableCell(withIdentifier: self.reusableCell,for: indexPath) as? PokemonCell
+            let id = Int(pokemon.urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())
+            cell?.pokemonNameLbl?.text = pokemon.name
+            let idFormated = String(format: "%03d", id!)
+            cell?.pokemonNumberLbl?.text = "#\(idFormated)"
+            let imageURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(String(id!)).png")
+            cell?.pokemonImage.kf.setImage(with: imageURL)
+            return cell
+        })
+        return datasource
+    }
+    
+    // 1
+    func applySnapshot(items: [Pokemon], animatingDifferences: Bool = false) {
+      // 2
+      var snapshot = Snapshot()
+      // 3
+      snapshot.appendSections([.main])
+      // 4
+      snapshot.appendItems(items)
+      // 5
+      dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,35 +97,12 @@ class ViewController: UIViewController  {
     
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate{
+extension ViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchBar.text!.isEmpty ? self.items.count : self.itemsCopy.count
-    }
-    
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: reusableCell) as! PokemonCell
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
-        let item = searchBar.text!.isEmpty ? self.items[indexPath.row] : self.itemsCopy[indexPath.row]
-        let id = Int(item.urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())
-        cell.pokemonNameLbl?.text = item.nameLabelText
-        let idFormated = String(format: "%03d", id!)
-        cell.pokemonNumberLbl?.text = "#\(idFormated)"
-        let imageURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(String(id!)).png")
-        cell.pokemonImage.kf.setImage(with: imageURL)
-        
-        
-    
-        return cell
-    }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         self.id = searchBar.text!.isEmpty ? Int(items[indexPath.row].urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())! : Int(itemsCopy[indexPath.row].urlPokemon.deletingPrefix("https://pokeapi.co/api/v2/pokemon/").dropLast())!
         
@@ -128,19 +122,17 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
         //popupVC.shouldDismissInteractivelty = dismissInteractivelySwitch.isOn
         popupVC.popupDelegate = self
         popupVC.text = "seteando texto desde el primer VC"
+        guard let id = id else { return }
+        popupVC.idPokemon = id
+        popupVC.setUpDataPokemon(idPokemon: id)
+
         present(popupVC, animated: true, completion: nil)
-        popupVC.data = selectedItem
-        popupVC.idPokemon = self.id
+
+
+
     }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destinationVC = segue.destination as? PokemonViewController else {
-          return
-        }
-        destinationVC.data = selectedItem
-        destinationVC.idPokemon = self.id
-    }
+
     
     
     func createAlert() {
@@ -169,11 +161,13 @@ extension ViewController{
     //MARK: Networking
     
     func setUpData(){
-        NetworkingProvider.shared.getPokemons(url: "https://pokeapi.co/api/v2/", range: "pokemon?limit=1800") { (pokemon: [Pokemon]) in
+        NetworkingProvider.shared.getPokemons(url: "https://pokeapi.co/api/v2/", range: "pokemon?limit=10") { (pokemon: [Pokemon]) in
             self.items = pokemon
+            self.pokemon = pokemon
             self.itemsCopy = pokemon
+            self.applySnapshot(items: self.pokemon)
             print("items copy count\(self.itemsCopy.count)")
-            self.tableView.reloadData()
+            
         } failure: { (error: Error?) in
             print(error.debugDescription)
         }
@@ -235,24 +229,12 @@ extension ViewController:UISearchBarDelegate{
 
 extension ViewController{
     func searchPokemon(text:String, items:[Displayable]) {
-        var coincidences: [Displayable] = []
-        
-        /*for item in items {
-            if item.nameLabelText.lowercased().contains(text.lowercased()) {
-                coincidences.append(item)
-                print(item.nameLabelText)
-            }
-        }*/
-
-        coincidences = items.filter { $0.nameLabelText.lowercased().contains(text.lowercased())}
+        var coincidences: [Pokemon] = []
+        coincidences = pokemon.filter { $0.nameLabelText.lowercased().contains(text.lowercased())}
         print(coincidences.count)
         print("items copy count search pokemon\(coincidences.count)")
+        text == "" ? applySnapshot(items: pokemon) : applySnapshot(items: coincidences, animatingDifferences: true)
         
-        self.itemsCopy = coincidences
-        self.pokemonTableView.reloadData()
-        
-        //return coincidences
-    
     }
 }
 

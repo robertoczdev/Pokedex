@@ -91,27 +91,13 @@ class PokemonViewController: BottomPopupViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        
-        
+        setUpUIControls()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        
-        setUpUIControls()
-        setUpDataPokemon()
-        
         super.viewWillAppear(animated)
-        
-        
     }
-    
-    
-    
-    
+
     @IBAction func evolutionBtnAction(_ sender: Any) {
         
         self.movesBtn.backgroundColor = .white
@@ -175,16 +161,6 @@ class PokemonViewController: BottomPopupViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func leftBtnAction(_ sender: Any) {
-        self.pokemonImage.kf.setImage(with: URL(string: (self.pokemonSprites?.backDefault!)!))
-    }
-    
-    @IBAction func rightBtnAction(_ sender: Any) {
-        self.pokemonImage.kf.setImage(with: URL(string: (self.pokemonSprites?.frontDefault!)!))
-    }
-    
-    
-
 }
 
 extension PokemonViewController{
@@ -218,11 +194,9 @@ extension PokemonViewController{
 extension PokemonViewController{
     //MARK: Networking
     
-    func setUpDataPokemon(){
-        
-        self.pokemonName.text = data?.nameLabelText
-        
-        NetworkingProvider.shared.getPokemonData(url:"https://pokeapi.co/api/v2/pokemon/\(self.idPokemon!)") { (pokemonData: PokemonBase) in
+    func setUpDataPokemon(idPokemon: Int){
+        NetworkingProvider.shared.getPokemonData(url:"https://pokeapi.co/api/v2/pokemon/\(idPokemon)") { (pokemonData: PokemonBase) in
+            self.pokemonName.text = pokemonData.name
             if let sprites = pokemonData.sprites{
                 self.pokemonSprites = sprites
             }

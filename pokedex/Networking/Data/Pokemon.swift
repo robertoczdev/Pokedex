@@ -12,6 +12,15 @@ struct Pokemon: Decodable {
     let url: String?
 }
 
+extension Pokemon: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+      lhs.name == rhs.name
+    }
+}
 
 extension Pokemon: Displayable{
     var nameLabelText: String {
